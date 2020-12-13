@@ -1,19 +1,31 @@
 const albedo_suffix = Filament.getSupportedFormatSuffix('astc s3tc');
 const texture_suffix = Filament.getSupportedFormatSuffix('etc');
-const environ = 'studio_small_02_2k'
+if (document.getElementById('pillar').checked )
+{
+	var environ = document.getElementById('pillar').value;
+}
+else if (document.getElementById('road').checked )
+{
+	var environ = document.getElementById('road').value;
+}
+else var environ = 'studio_small_02_2k';
 const ibl_url = `${environ}/${environ}_ibl.ktx`;
 const sky_small_url = `${environ}/${environ}_skybox.ktx`;
 const sky_large_url = `${environ}/${environ}_skybox.ktx`;
 const filamat_url = 'aiDefaultMat.filamat';
 const filamesh_url = 'lucy.filamesh';
+var x = 0;
+ var red_1 = [0.8, 0.5, 0.3];
+//var input = parseFloat(document.getElementById("input_1").value);
 
 Filament.init([filamat_url, filamesh_url, sky_large_url, ibl_url], () => {
   window.Fov = Filament.Camera$Fov;
   window.LightType = Filament.LightManager$Type;	
-  window.app = new App(document.getElementsByTagName('canvas')[0]);
-});
+  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value);
+  });
+
 class App {
-  constructor(canvas) {
+  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_) {
     this.canvas = canvas;
     const engine = this.engine = Filament.Engine.create(canvas);
     const scene = this.scene = engine.createScene();
@@ -21,10 +33,28 @@ class App {
     const matinstance = material.createInstance();
     const filamesh = this.engine.loadFilamesh(filamesh_url, matinstance);
     this.suzanne = filamesh.renderable;
-    const red_1 = [0.8, 0.5, 0.3];
+    if (red_ != "" && green_ != "" && blue_ != "")
+      	{
+      	red_1 = [parseFloat(red_)/256, parseFloat(green_)/256, parseFloat(blue_)/256];
+      	console.log ("R " + red_ + " G " + green_ + " B "+ blue_);
+      	}
+  else
+  {
+  	console.log ("R " + red_ + " G " + green_ + " B "+ blue_);  
+  	red_1 = [0.8, 0.5, 0.3];
+  	}
   matinstance.setColor3Parameter('baseColor', Filament.RgbType.sRGB, red_1);
+    if (metal_ != "")
+    matinstance.setFloatParameter('metallic', parseFloat(metal_));
+    else
     matinstance.setFloatParameter('metallic', 1.0);
+    if (rough_ != "") 
+    matinstance.setFloatParameter('roughness', parseFloat(rough_));
+    else
     matinstance.setFloatParameter('roughness', .5);
+    if (reflect_ != "")
+    matinstance.setFloatParameter('reflectance', parseFloat(reflect_));
+    else
     matinstance.setFloatParameter('reflectance', .7);
     const renderable = Filament.EntityManager.get()
       .create();
@@ -93,18 +123,34 @@ class App {
   }
   render() {
     const transform = this.trackball.getMatrix();
+    //console.log("Trans: " + transform);
     const tcm = this.engine.getTransformManager();
-    const inst = tcm.getInstance(this.suzanne);
-    tcm.setTransform(inst, transform);
-    inst.delete();
+    //const inst = tcm.getInstance(this.suzanne);
+   // tcm.setTransform(inst, transform);
+    //inst.delete();
     const radians = Date.now() / 10000;
-    var eye = [0, 0, 6];
-    var center = [0, 2, 0];
-    var up = [0, 1, 0];
+ 	var eye = [3, 1, 10];
+     var center = [0, 1, 0];
+     var up = [0, 1, 0];
 
+	const radians2 = (Date.now() - this.start) / 3000;
+	
+	//x = x + 0.0001;
+	//console.log("x =" + x); 
+	//const out = mat4.set(mat4.create(), 1, 1, 1, 1, 1, 1, 1, 1, x, 1, 1, 1, 1, 1, 1, 1);
+	//console.log("Out " + out);
+	//console.log("Create " + mat4.create());
+	//const timer = (Date.now() - this.start)/1000;
+	
+    //const transform2 = mat4.fromRotation(out ,1.6, [-1, 1, 1]);
+    const inst2 = tcm.getInstance(this.suzanne);
+    //tcm.setTransform(inst2, transform);
+    inst2.delete();
     
+    //console.log("Trans2: " + transform2);
     vec3.rotateY(eye, eye, center, radians);
     this.camera.lookAt(eye, center, up);
+    
     //if (!this.trackball.isIdle())
     this.renderer.render(this.swapChain, this.view);
     window.requestAnimationFrame(this.render);
