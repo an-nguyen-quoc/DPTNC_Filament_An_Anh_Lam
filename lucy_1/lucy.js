@@ -29,11 +29,12 @@ var x = 0;
 Filament.init([filamat_url, filamesh_url, sky_large_url, ibl_url], () => {
   window.Fov = Filament.Camera$Fov;
   window.LightType = Filament.LightManager$Type;	
-  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("sun_color_red").value, document.getElementById("sun_color_green").value, document.getElementById("sun_color_blue").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value);
+  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value,
+  document.getElementById("dir_x").value, document.getElementById("dir_x").value, document.getElementById("dir_x").value);
   });
 
 class App {
-  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_, sun_red, sun_green, sun_blue, sun_intensity_, intensity_) {
+  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_, sun_intensity_, intensity_, dir_x, dir_y, dir_z) {
     this.canvas = canvas;
     const engine = this.engine = Filament.Engine.create(canvas);
     const scene = this.scene = engine.createScene();
@@ -51,9 +52,7 @@ class App {
 	  red_1 = [0.8, 0.5, 0.3];
 	  }
 	var sun_color = [0.98, 0.92, 0.89];
-	if (sun_red != "" && sun_green != "" && sun_blue != "")
-		sun_color = [parseFloat(sun_red), parseFloat(sun_green), parseFloat(sun_blue)];
-	console.log(sun_color);
+	
 	
 	var sun_intensity = 11000.0;
 	if (sun_intensity_ != "")
@@ -95,12 +94,18 @@ class App {
       var _intensity = 50000.0;
       if (intensity_ != "")
       		_intensity = parseFloat(intensity_);
+      var direction_ = [-1, 0, 1];
+      if (dir_x != "" && dir_y != "" && dir_z != "")
+      	{
+      	direction_ = [parseFloat(dir_x), parseFloat(dir_y), parseFloat(dir_z)];
+      	}	
+      		
     const backlight = Filament.EntityManager.get()
       .create();
     scene.addEntity(backlight);
     Filament.LightManager.Builder(LightType.DIRECTIONAL)
       .color([0.98, 0.92, 0.89])
-      .direction([-1, 0, 1])
+      .direction(direction_)
       .intensity(50000.0)
       .build(engine, backlight);
     const indirectLight = engine.createIblFromKtx(ibl_url);
@@ -166,7 +171,7 @@ class App {
     inst2.delete();
     
     //console.log("Trans2: " + transform2);
-    vec3.rotateY(eye, eye, center, radians);
+    //vec3.rotateY(eye, eye, center, radians);
     this.camera.lookAt(eye, center, up);
     
     //if (!this.trackball.isIdle())
