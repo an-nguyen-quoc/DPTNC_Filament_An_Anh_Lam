@@ -153,7 +153,13 @@ class App {
     //inst.delete();
     const radians = Date.now() / 10000;
  	var eye = [3, 1, 10];
-     var center = [0, 1, 0];
+ 	var center = [0, 1, 0];
+ 	if (filamesh_url == "sphere.filamesh" || filamesh_url == "cube.filamesh")
+ 		{
+ 		eye = [3, 1, 4];
+ 		center = [0, -0.5, 0];
+ 		}
+     
      var up = [0, 1, 0];
 
 	const radians2 = (Date.now() - this.start) / 3000;
@@ -171,7 +177,7 @@ class App {
     inst2.delete();
     
     //console.log("Trans2: " + transform2);
-    //vec3.rotateY(eye, eye, center, radians);
+    vec3.rotateY(eye, eye, center, radians);
     this.camera.lookAt(eye, center, up);
     
     //if (!this.trackball.isIdle())
