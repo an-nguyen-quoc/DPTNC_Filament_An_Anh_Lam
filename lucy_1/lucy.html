@@ -3,21 +3,22 @@
 <head>
     <title>Bài tập dài môn Đa phương tiện Nâng cao</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { touch-action: none; width: 70%; height: 70%; float:left }
         div { background-color: DarkBlue;}
         form {font-size: 12px; color: white;margin:10px;} 
         label {width: 100px}
-        input {width: 10%; } 
+        input {width: 15%; } 
         h3 {font-size: 16px; color: white; }
-        p {font-size: 12px; color: white; margin: 10px;}  
+        p {font-size: 14px; color: white; margin: 10px;}
+        
     </style>
 </head>
-<body>
-<div style="background-color:DarkBlue;"> 
-<div style="width:30%;float:left">
+<body style="background-color:DarkBlue;font-family:'Georgia, Arial, Verdana';">
+<div > 
+<div style="text-align:center">
 	<h3>
 	Xin chào thầy và các bạn
 	</h3>
@@ -25,48 +26,7 @@
 	Nhóm chúng mình bao gồm các thành viên: Nguyễn Quốc An, Nguyễn Thị Lan Anh và Nguyễn Đặng Sơn Lam.
 	</p>
 </div>
-<div style="width:70%; float:left">
-	<form>
-	Chọn đối tượng:
-	<label for="lucy">Lucy</label>
-	<input type="radio" id="lucy" name="obj" value="lucy.filamesh">
-	<label for="sphere">Sphere</label>
-	<input type="radio" id="sphere" name="obj" value="sphere.filamesh">
-	<label for="cube">Cube</label>
-	<input type="radio" id="cube" name="obj" value="cube.filamesh">
-	<label for="suzanne">Suzanne</label>
-	<input type="radio" id="suzanne" name="obj" value="suzanne.filamesh">
-	<br>
-	 Chọn background :
-<label for="studio">Studio</label>
-<input type="radio" id="studio" name="env" value="studio_small_02_2k">
-<label for="Pillar">Pillar</label>
-<input type="radio" id="pillar" name="env" value="pillars_2k">
-<label for="road">Crossroads</label>
-<input type="radio" id="road" name="env" value="venetian_crossroads_2k">
-<br>
 
-  <label for="red">RGB - Red</label>
-  <input type="text" id="red" name="red">
-  <label for="green">RGB - Green</label>
-  <input type="text" id="green" name="green">
-  <label for="blue">RGB - Blue</label>
-  <input type="text" id="blue" name="blue"> <br>
-    <label for="metal">Metallic</label>
-  <input type="text" id="metal" name="metal">
-   <label for="rough">Roughness</label>
-  <input type="text" id="rough" name="rough">
-     <label for="reflect">Reflectance </label>
-  <input type="text" id="reflect" name="reflect"> <br>
-       <label for="clearCoat"> clearCoat </label>
-  <input type="text" id="clearCoat" name="clearCoat">
-       <label for="clearCoatRoughness">clearCoatRoughness </label>
-  <input type="text" id="clearCoatRoughness" name="clearCoatRoughness">
-       <label for="anisotropy">anisotropy </label>
-  <input type="text" id="anisotropy" name="anisotropy">
-    <button type="button" onclick="Func(document.getElementById('red').value)"> Click Me!</button>
-  </form>
-  </div> 
 </div>
 <div>
 <div style="width:30%; float:left">
@@ -88,7 +48,47 @@
   	<label for="dir_z"> Z (1)</label>
   	<input type="text" id="dir_z" name="dir_z"> <br>
 	</form>
-
+	
+	<form>
+	Chọn đối tượng: <br>
+	<label for="lucy">Lucy</label>
+	<input type="radio" id="lucy" name="obj" value="lucy.filamesh"> 
+	<label for="sphere">Sphere</label> 
+	<input type="radio" id="sphere" name="obj" value="sphere.filamesh"> 
+	<label for="cube">Cube</label>
+	<input type="radio" id="cube" name="obj" value="cube.filamesh">
+	<label for="suzanne">Suzanne</label>
+	<input type="radio" id="suzanne" name="obj" value="suzanne.filamesh">
+	<br>
+	 Chọn background : <br>
+<label for="studio">Studio</label>
+<input type="radio" id="studio" name="env" value="studio_small_02_2k">
+<label for="Pillar">Pillar</label>
+<input type="radio" id="pillar" name="env" value="pillars_2k">
+<label for="road">Crossroads</label>
+<input type="radio" id="road" name="env" value="venetian_crossroads_2k">
+<br>
+	Chọn màu:<br>
+  <label for="red">Red</label>
+  <input type="text" id="red" name="red">
+  <label for="green">Green</label>
+  <input type="text" id="green" name="green">
+  <label for="blue">Blue</label>
+  <input type="text" id="blue" name="blue"> 
+  	<br> Thay đổi thông số  <br>
+  	
+    <label for="metal">Metallic </label>
+  <input type="text" id="metal" name="metal"> 
+   <label for="rough">Roughness</label>
+  <input type="text" id="rough" name="rough"> 
+     <label for="reflect">Reflectance </label>
+  <input type="text" id="reflect" name="reflect"> <br>
+       <label for="clearCoat"> clearCoat </label>
+  <input type="text" id="clearCoat" name="clearCoat"> 
+       <label for="clearCoatRoughness">clearCoatRoughness </label>
+  <input type="text" id="clearCoatRoughness" name="clearCoatRoughness"> <br>
+    <button type="button" onclick="Func(document.getElementById('red').value)"> Click Me!</button>
+  </form>
 </div>
 <canvas></canvas>
 </div>

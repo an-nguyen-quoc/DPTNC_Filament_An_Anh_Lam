@@ -31,7 +31,7 @@ Filament.init([filamat_url, filamesh_url, sky_large_url, ibl_url], () => {
   window.LightType = Filament.LightManager$Type;	
   window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("clearCoat").value,
   document.getElementById("clearCoatRoughness").value,
-  document.getElementById("anisotropy").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value,
+  "0.0", document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value,
   document.getElementById("dir_x").value, document.getElementById("dir_x").value, document.getElementById("dir_x").value);
   });
 
