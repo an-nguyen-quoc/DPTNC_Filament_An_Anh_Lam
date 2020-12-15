@@ -12,7 +12,7 @@ else var environ = 'studio_small_02_2k';
 const ibl_url = `${environ}/${environ}_ibl.ktx`;
 const sky_small_url = `${environ}/${environ}_skybox.ktx`;
 const sky_large_url = `${environ}/${environ}_skybox.ktx`;
-const filamat_url = 'aiDefaultMat.filamat';
+const filamat_url = 'mat.filamat';
 
 if (document.getElementById('cube').checked)
 	var filamesh_url = document.getElementById('cube').value;
@@ -29,12 +29,14 @@ var x = 0;
 Filament.init([filamat_url, filamesh_url, sky_large_url, ibl_url], () => {
   window.Fov = Filament.Camera$Fov;
   window.LightType = Filament.LightManager$Type;	
-  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value,
+  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("clearCoat").value,
+  document.getElementById("clearCoatRoughness").value,
+  document.getElementById("anisotropy").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value,
   document.getElementById("dir_x").value, document.getElementById("dir_x").value, document.getElementById("dir_x").value);
   });
 
 class App {
-  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_, sun_intensity_, intensity_, dir_x, dir_y, dir_z) {
+  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_, clearCoat_, clearCoatRoughness_, anisotropy_, sun_intensity_, intensity_, dir_x, dir_y, dir_z) {
     this.canvas = canvas;
     const engine = this.engine = Filament.Engine.create(canvas);
     const scene = this.scene = engine.createScene();
@@ -58,6 +60,12 @@ class App {
 	if (sun_intensity_ != "")
 		sun_intensity = parseFloat(sun_intensity_);	
 	matinstance.setColor3Parameter('baseColor', Filament.RgbType.sRGB, red_1);
+	var clearCoat = 0.0;
+	var clearCoatRoughness = 0.0;
+	var anisotropy = 0.0;
+	if (clearCoat_ != "") clearCoat = parseFloat(clearCoat_);
+	if (clearCoatRoughness_ != "") clearCoatRoughness = parseFloat(clearCoatRoughness_);
+	if (anisotropy_ != "") anisotropy = parseFloat(anisotropy_);
     if (metal_ != "")
     matinstance.setFloatParameter('metallic', parseFloat(metal_));
     else
@@ -70,6 +78,10 @@ class App {
     matinstance.setFloatParameter('reflectance', parseFloat(reflect_));
     else
     matinstance.setFloatParameter('reflectance', .7);
+    
+    matinstance.setFloatParameter('clearCoat', clearCoat);
+    matinstance.setFloatParameter('clearCoatRoughness', clearCoatRoughness);
+    matinstance.setFloatParameter('anisotropy', anisotropy);
     const renderable = Filament.EntityManager.get()
       .create();
     scene.addEntity(renderable);
