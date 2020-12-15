@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Filament Tutorial</title>
+    <title>Bài tập dài môn Đa phương tiện Nâng cao</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
     <style>
         body { margin: 0; overflow: hidden; }
-        canvas { touch-action: none; width: 100%; height: 70%; }
+        canvas { touch-action: none; width: 70%; height: 70%; float:left }
+        div { background-color: DarkBlue;}
+        form {font-size: 12px; color: white;margin:10px;} 
+        label {width: 100px}
+        input {width: 10%; } 
+        h3 {font-size: 16px; color: white; }
+        p {font-size: 12px; color: white; margin: 10px;}  
     </style>
 </head>
 <body>
-<div> 
+<div style="background-color:DarkBlue;"> 
+<div style="width:30%;float:left">
 	<h3>
 	Xin chào thầy và các bạn
 	</h3>
 	<p>
 	Nhóm chúng mình bao gồm các thành viên: Nguyễn Quốc An, Nguyễn Thị Lan Anh và Nguyễn Đặng Sơn Lam.
 	</p>
+</div>
+<div style="width:70%; float:left">
 	<form>
+	Chọn đối tượng:
+	<label for="lucy">Lucy</label>
+	<input type="radio" id="lucy" name="obj" value="lucy.filamesh">
+	<label for="sphere">Sphere</label>
+	<input type="radio" id="sphere" name="obj" value="sphere.filamesh">
+	<label for="cube">Cube</label>
+	<input type="radio" id="cube" name="obj" value="cube.filamesh">
+	<label for="suzanne">Suzanne</label>
+	<input type="radio" id="suzanne" name="obj" value="suzanne.filamesh">
+	<br>
 	 Chọn background :
 <label for="studio">Studio</label>
 <input type="radio" id="studio" name="env" value="studio_small_02_2k">
@@ -40,13 +59,37 @@
      <label for="reflect">Reflectance </label>
   <input type="text" id="reflect" name="reflect">
     <button type="button" onclick="Func(document.getElementById('red').value)"> Click Me!</button>
-  </form> 
+  </form>
+  </div> 
+</div>
+<div>
+<div style="width:30%; float:left">
+
+	<form>
+	<p> Nguồn sáng: Sunlight</p>
+	<label for="sun_color_red"> Sunlight Color (Red Index)</label>
+  	<input type="text" id="sun_color_red" name="sun_color_red"> <br>
+  	<label for="sun_color_green"> Sunlight Color (Green Index)</label>
+  	<input type="text" id="sun_color_green" name="sun_color_green"> <br>
+  	<label for="sun_color_blue"> Sunlight Color (Blue Index)</label>
+  	<input type="text" id="sun_color_blue" name="sun_color_blue"> <br>
+  	<label for="sun_intensity"> Sunlight Intensity (11000)</label>
+  	<input type="text" id="sun_intensity" name="sun_intensity"> <br>
+	</form>
+	
+	<form>
+	<p> Nguồn sáng định hướng </p>
+	<label for="light_intensity"> Intensity (50000) </label>
+  	<input type="text" id="light_intensity" name="light_intensity" style="width:100px !important"> <br>
+	</form>
+
 </div>
 <canvas></canvas>
-    <script src="//unpkg.com/filament/filament.js"></script>
-    <script src="//unpkg.com/gl-matrix@2.8.1"></script>
+</div>
+    <script src="filament.js"></script>
+    <script src="gl-matrix-min.js"></script>
     <script src="lucy.js"></script>
-	<script src="https://unpkg.com/gltumble"></script>
+	<script src="gltumble.min.js"></script>
   
 
 <script>

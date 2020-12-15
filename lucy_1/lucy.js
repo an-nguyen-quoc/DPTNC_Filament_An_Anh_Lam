@@ -13,7 +13,15 @@ const ibl_url = `${environ}/${environ}_ibl.ktx`;
 const sky_small_url = `${environ}/${environ}_skybox.ktx`;
 const sky_large_url = `${environ}/${environ}_skybox.ktx`;
 const filamat_url = 'aiDefaultMat.filamat';
-const filamesh_url = 'lucy.filamesh';
+
+if (document.getElementById('cube').checked)
+	var filamesh_url = document.getElementById('cube').value;
+else if (document.getElementById('sphere').checked)
+	var filamesh_url = document.getElementById('sphere').value;
+else if (document.getElementById('suzanne').checked)
+	var filamesh_url = document.getElementById('suzanne').value;
+else var filamesh_url = 'lucy.filamesh';
+
 var x = 0;
  var red_1 = [0.8, 0.5, 0.3];
 //var input = parseFloat(document.getElementById("input_1").value);
@@ -21,11 +29,11 @@ var x = 0;
 Filament.init([filamat_url, filamesh_url, sky_large_url, ibl_url], () => {
   window.Fov = Filament.Camera$Fov;
   window.LightType = Filament.LightManager$Type;	
-  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value);
+  window.app = new App(document.getElementsByTagName("canvas")[0], (document.getElementById("red").value), (document.getElementById("green").value), (document.getElementById("blue").value), document.getElementById("metal").value, document.getElementById("rough").value, document.getElementById("reflect").value, document.getElementById("sun_color_red").value, document.getElementById("sun_color_green").value, document.getElementById("sun_color_blue").value, document.getElementById("sun_intensity").value, document.getElementById("light_intensity").value);
   });
 
 class App {
-  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_) {
+  constructor(canvas, red_, green_, blue_, metal_, rough_, reflect_, sun_red, sun_green, sun_blue, sun_intensity_, intensity_) {
     this.canvas = canvas;
     const engine = this.engine = Filament.Engine.create(canvas);
     const scene = this.scene = engine.createScene();
@@ -36,14 +44,21 @@ class App {
     if (red_ != "" && green_ != "" && blue_ != "")
       	{
       	red_1 = [parseFloat(red_)/256, parseFloat(green_)/256, parseFloat(blue_)/256];
-      	console.log ("R " + red_ + " G " + green_ + " B "+ blue_);
       	}
   else
-  {
-  	console.log ("R " + red_ + " G " + green_ + " B "+ blue_);  
-  	red_1 = [0.8, 0.5, 0.3];
-  	}
-  matinstance.setColor3Parameter('baseColor', Filament.RgbType.sRGB, red_1);
+	  {
+	  console.log ("R " + red_ + " G " + green_ + " B "+ blue_);  
+	  red_1 = [0.8, 0.5, 0.3];
+	  }
+	var sun_color = [0.98, 0.92, 0.89];
+	if (sun_red != "" && sun_green != "" && sun_blue != "")
+		sun_color = [parseFloat(sun_red), parseFloat(sun_green), parseFloat(sun_blue)];
+	console.log(sun_color);
+	
+	var sun_intensity = 11000.0;
+	if (sun_intensity_ != "")
+		sun_intensity = parseFloat(sun_intensity_);	
+	matinstance.setColor3Parameter('baseColor', Filament.RgbType.sRGB, red_1);
     if (metal_ != "")
     matinstance.setFloatParameter('metallic', parseFloat(metal_));
     else
@@ -70,13 +85,16 @@ class App {
       .create();
     scene.addEntity(sunlight);
     Filament.LightManager.Builder(LightType.SUN)
-      .color([0.98, 0.92, 0.89])
-      .intensity(11000.0)
+      .color(sun_color)
+      .intensity(sun_intensity)
       .direction([0.6, -1.0, -0.8])
       .sunAngularRadius(1.9)
       .sunHaloSize(10.0)
       .sunHaloFalloff(80.0)
       .build(engine, sunlight);
+      var _intensity = 50000.0;
+      if (intensity_ != "")
+      		_intensity = parseFloat(intensity_);
     const backlight = Filament.EntityManager.get()
       .create();
     scene.addEntity(backlight);
@@ -86,7 +104,7 @@ class App {
       .intensity(50000.0)
       .build(engine, backlight);
     const indirectLight = engine.createIblFromKtx(ibl_url);
-    indirectLight.setIntensity(50000);
+    indirectLight.setIntensity(_intensity);
     scene.setIndirectLight(indirectLight);
     
     this.trackball = new Trackball(canvas, {
