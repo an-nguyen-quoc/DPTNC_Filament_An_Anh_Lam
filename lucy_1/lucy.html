@@ -8,11 +8,11 @@
         body { margin: 0; overflow: hidden; }
         canvas { touch-action: none; width: 70%; height: 70%; float:left }
         div { background-color: DarkBlue;}
-        form {font-size: 12px; color: white;margin:10px;} 
-        label {width: 100px}
-        input {width: 15%; } 
-        h3 {font-size: 16px; color: white; }
-        p {font-size: 14px; color: white; margin: 10px;}
+        form {font-size: 18px; color: white;margin:10px;} 
+        label {width: 100px !important; position: relative;}
+        input {width: 15%; position: relative; } 
+        h3 {font-size: 24px; color: white; }
+        p {font-size: 20px; color: white; margin: 10px; text-align: center;}
         
     </style>
 </head>
@@ -30,37 +30,36 @@
 </div>
 <div>
 <div style="width:30%; float:left">
-
+<!--
 	<form>
-	<p> Nguồn sáng: Sunlight</p>
+	<p> <b>Nguồn sáng: Sunlight</b></p>
   	<label for="sun_intensity"> Sunlight Intensity (11000)</label>
   	<input type="text" id="sun_intensity" name="sun_intensity"> <br>
 	</form>
-	
+-->
 	<form>
-	<p> Nguồn sáng định hướng </p>
+	<p> NGUỒN SÁNG ĐỊNH HƯỚNG </p>
 	<label for="light_intensity"> Intensity (50000) </label>
   	<input type="text" id="light_intensity" name="light_intensity" style="width:100px !important"> <br>
- 	<label for="dir_x"> X (-1)</label>
+ 	<label for="dir_x"> <span style="width:100px !important">  X (-1) </span></label>
   	<input type="text" id="dir_x" name="dir_x"> <br>
 	<label for="dir_y"> Y (0) </label>
   	<input type="text" id="dir_y" name="dir_y"> <br>
   	<label for="dir_z"> Z (1)</label>
-  	<input type="text" id="dir_z" name="dir_z"> <br>
+  	<input type="text" id="dir_z" name="dir_z">
 	</form>
-	
 	<form>
-	Chọn đối tượng: <br>
+	<p>CHỌN ĐỐI TƯỢNG </p>
 	<label for="lucy">Lucy</label>
 	<input type="radio" id="lucy" name="obj" value="lucy.filamesh"> 
 	<label for="sphere">Sphere</label> 
-	<input type="radio" id="sphere" name="obj" value="sphere.filamesh"> 
+	<input type="radio" id="sphere" name="obj" value="sphere.filamesh"> <br>
 	<label for="cube">Cube</label>
 	<input type="radio" id="cube" name="obj" value="cube.filamesh">
 	<label for="suzanne">Suzanne</label>
 	<input type="radio" id="suzanne" name="obj" value="suzanne.filamesh">
 	<br>
-	 Chọn background : <br>
+	<p>CHỌN BACKGROUND </p>  
 <label for="studio">Studio</label>
 <input type="radio" id="studio" name="env" value="studio_small_02_2k">
 <label for="Pillar">Pillar</label>
@@ -68,23 +67,24 @@
 <label for="road">Crossroads</label>
 <input type="radio" id="road" name="env" value="venetian_crossroads_2k">
 <br>
-	Chọn màu:<br>
+	<p> CHỌN MÀU </p>
   <label for="red">Red</label>
   <input type="text" id="red" name="red">
   <label for="green">Green</label>
   <input type="text" id="green" name="green">
   <label for="blue">Blue</label>
   <input type="text" id="blue" name="blue"> 
-  	<br> Thay đổi thông số  <br>
+    <br> 
+    <p> THAY ĐỔI THÔNG SỐ VẬT LIỆU  </p> 
   	
     <label for="metal">Metallic </label>
-  <input type="text" id="metal" name="metal"> 
+  <input type="text" id="metal" name="metal"> <br>
    <label for="rough">Roughness</label>
-  <input type="text" id="rough" name="rough"> 
+  <input type="text" id="rough" name="rough"> <br>
      <label for="reflect">Reflectance </label>
   <input type="text" id="reflect" name="reflect"> <br>
        <label for="clearCoat"> clearCoat </label>
-  <input type="text" id="clearCoat" name="clearCoat"> 
+  <input type="text" id="clearCoat" name="clearCoat"> <br>
        <label for="clearCoatRoughness">clearCoatRoughness </label>
   <input type="text" id="clearCoatRoughness" name="clearCoatRoughness"> <br>
     <button type="button" onclick="Func(document.getElementById('red').value)"> Click Me!</button>
